@@ -32,6 +32,7 @@ class CounterElement extends LitElement {
           Value is <span>${this.value}</span>.
           <button @click="${this._onIncrement}" title="Add 1">${plusIcon}</button>
           <button @click="${this._onDecrement}" title="Minus 1">${minusIcon}</button>
+          <button @click="${this._onReset}">Reset</button>
         </p>
       </div>
     `;
@@ -60,6 +61,12 @@ class CounterElement extends LitElement {
     this.value--;
     this.clicks++;
     this.dispatchEvent(new CustomEvent('counter-decremented'));
+  }
+
+  _onReset() {
+    this.value = 0;
+    this.clicks = 0;
+    this.dispatchEvent(new CustomEvent('counter-reset'));
   }
 }
 

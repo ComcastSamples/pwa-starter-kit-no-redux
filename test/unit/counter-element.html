@@ -67,6 +67,22 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           assert.equal(el.value, '-1');
         });
 
+        test('clicking on reset resets', function() {
+          const buttons = el.shadowRoot.querySelectorAll('button');
+
+          buttons[1].click();
+          buttons[1].click();
+          buttons[1].click();
+
+          assert.equal(el.clicks, '3');
+          assert.equal(el.value, '-3');
+
+          buttons[2].click();
+
+          assert.equal(el.clicks, '0');
+          assert.equal(el.value, '0');
+        });
+
         test('a11y', function() {
           return axeReport(el);
         });
