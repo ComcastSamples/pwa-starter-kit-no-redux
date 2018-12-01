@@ -45,7 +45,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           assert.equal(el.value, '0');
         });
 
-        test('clicking on plus increments', function() {
+        test('clicking on plus increments by 1 by default', function() {
           assert.equal(el.clicks, '0');
           assert.equal(el.value, '0');
 
@@ -56,7 +56,20 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           assert.equal(el.value, '1');
         });
 
-        test('clicking on minus decrements', function() {
+        test('clicking on plus increments by 2 when Double Increment is toggled on', function() {
+          el.doubleIncrement = true;
+
+          assert.equal(el.clicks, '0');
+          assert.equal(el.value, '0');
+
+          const buttons = el.shadowRoot.querySelectorAll('button');
+          buttons[0].click();
+
+          assert.equal(el.clicks, '1');
+          assert.equal(el.value, '2');
+        });
+
+        test('clicking on minus decrements by 1 by default', function() {
           assert.equal(el.clicks, '0');
           assert.equal(el.value, '0');
 
@@ -65,6 +78,19 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
           assert.equal(el.clicks, '1');
           assert.equal(el.value, '-1');
+        });
+
+        test('clicking on minus decrements by 2 when Double Increment is toggled on', function() {
+          el.doubleIncrement = true;
+
+          assert.equal(el.clicks, '0');
+          assert.equal(el.value, '0');
+
+          const buttons = el.shadowRoot.querySelectorAll('button');
+          buttons[1].click();
+
+          assert.equal(el.clicks, '1');
+          assert.equal(el.value, '-2');
         });
 
         test('clicking on reset resets', function() {
@@ -81,6 +107,20 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
           assert.equal(el.clicks, '0');
           assert.equal(el.value, '0');
+        });
+
+        test('toggling Double Increment on updates local state of that', function() {
+          assert.isFalse(el.doubleIncrement);
+
+          const toggle = el.shadowRoot.querySelector('input');
+
+          toggle.click();
+
+          assert.isTrue(el.doubleIncrement);
+
+          toggle.click();
+
+          assert.isFalse(el.doubleIncrement);
         });
 
         test('a11y', function() {

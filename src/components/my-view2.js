@@ -32,10 +32,11 @@ class MyView2 extends PageViewElement {
       </section>
       <section>
         <p>
-          <counter-element value="${this._value}" clicks="${this._clicks}"
+          <counter-element value="${this._value}" clicks="${this._clicks}" doubleIncrement="${this._doubleIncrement}"
               @counter-incremented="${this._increment}"
               @counter-decremented="${this._decrement}"
-              @counter-reset="${this._counterReset}">
+              @counter-reset="${this._counterReset}"
+              @counter-double-increment="${this._counterDoubleIncrement}">
           </counter-element>
         </p>
       </section>
@@ -46,27 +47,38 @@ class MyView2 extends PageViewElement {
     // This is the data from the store.
     _clicks: { type: Number },
     _value: { type: Number },
+    _doubleIncrement: { type: Boolean },
   }}
 
   constructor() {
     super();
     this._clicks = 0;
     this._value = 0;
+    this._doubleIncrement = false;
+  }
+
+  _incrementAmount() {
+    return this._doubleIncrement ? 2 : 1;
   }
 
   _increment() {
     this._clicks++;
-    this._value++;
+    this._value = this._value + this._incrementAmount();
   }
 
   _decrement() {
     this._clicks++;
-    this._value--;
+    this._value = this._value - this._incrementAmount();
   }
 
   _counterReset() {
     this._clicks = 0;
     this._value = 0;
+  }
+
+  _counterDoubleIncrement(event) {
+    let checked = event.detail;
+    this._doubleIncrement = checked;
   }
 }
 

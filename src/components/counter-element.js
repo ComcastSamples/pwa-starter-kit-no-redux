@@ -33,6 +33,10 @@ class CounterElement extends LitElement {
           <button @click="${this._onIncrement}" title="Add 1">${plusIcon}</button>
           <button @click="${this._onDecrement}" title="Minus 1">${minusIcon}</button>
           <button @click="${this._onReset}">Reset</button>
+          <input type="checkbox"
+            @click="${this._onDoubleIncrementToggle}"
+            id="doubleIncrementToggle">
+          <label for="doubleIncrementToggle">Double Increment?</label>
         </p>
       </div>
     `;
@@ -42,23 +46,30 @@ class CounterElement extends LitElement {
     /* The total number of clicks you've done. */
     clicks: { type: Number },
     /* The current value of the counter. */
-    value: { type: Number }
+    value: { type: Number },
+    /* Should we increment by 2? */
+    doubleIncrement: { type: Boolean }
   }};
 
   constructor() {
     super();
     this.clicks = 0;
     this.value = 0;
+    this.doubleIncrement = false;
+  }
+
+  _incrementAmount() {
+    return this.doubleIncrement ? 2 : 1;
   }
 
   _onIncrement() {
-    this.value++;
+    this.value = this.value + this._incrementAmount();
     this.clicks++;
     this.dispatchEvent(new CustomEvent('counter-incremented'));
   }
 
   _onDecrement() {
-    this.value--;
+    this.value = this.value - this._incrementAmount();
     this.clicks++;
     this.dispatchEvent(new CustomEvent('counter-decremented'));
   }
@@ -67,6 +78,12 @@ class CounterElement extends LitElement {
     this.value = 0;
     this.clicks = 0;
     this.dispatchEvent(new CustomEvent('counter-reset'));
+  }
+
+  _onDoubleIncrementToggle(event) {
+    let checked = event.target.checked;
+    this.doubleIncrement = checked;
+    this.dispatchEvent(new CustomEvent('counter-double-increment', { detail: checked }));
   }
 }
 
