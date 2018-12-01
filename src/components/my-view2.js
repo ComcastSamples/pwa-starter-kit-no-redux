@@ -23,10 +23,10 @@ class MyView2 extends PageViewElement {
       ${SharedStyles}
       <section>
         <h2>State container example: simple counter</h2>
-        <div class="circle">${this._clicks}</div>
-        <p>This page contains a reusable <code>&lt;counter-element&gt;</code> which is connected to the
-        store. When the element updates its counter, this page updates the values
-        in the store, and you can see the total number of clicks reflected in
+        <div class="circle">${this._value}</div>
+        <p>This page contains a reusable <code>&lt;counter-element&gt;</code>.
+        When the element updates its counter, this page updates its values,
+        and you can see the current value of the counter reflected in
         the bubble above.</p>
         <br><br>
       </section>
